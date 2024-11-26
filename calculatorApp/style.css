@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+:root{
+    --mainBackground: rgb(9, 9, 9);
+    --textColor: white;
+    --accentColor: #de9a34;
+}
+*{
+    margin: 0;
+    padding: 0;
+} 
+
+body{
+    
+}
