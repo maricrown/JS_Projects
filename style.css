@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+*{
+    margin: 0;
+    padding: 0;
+    transition: background-color .3s, width.3s, height .3s;
+    
+} 
+body{
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Quicksand';
+    background-color:  rgb(9, 9, 9);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+}
+
+.content{
+    width: 100vw;
+    height: 100vh;
+    align-content: center;
+    padding-inline: 3rem;
+}
+
+nav{
+    color: white;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    backdrop-filter: blur(1px);
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(black,transparent);
+    align-items: center;
+}
+
+nav .returnArrow{
+    cursor: pointer;
+    float: left;
+    margin-right: auto;
+    opacity: .7;
+    transition: all .5s;
+}
+nav .returnArrow:hover{
+    opacity: 1;
+    fill: #de9a34;
+}
+
+nav a{
+    display: flex;
+    height: fit-content;
+    color: white;
+    text-decoration: none;
+    letter-spacing:5px;
+    align-items: center;
+    opacity: .7;
+    transition: all .3s;
+    margin-left: auto;
+}
+nav a:hover{
+    opacity: 1;
+    letter-spacing: 8px;
+}
+
+.projectCard{
+    cursor: pointer;
+    max-width: 48vw;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    width: fit-content;
+    opacity: .6;
+    transition: .3s;
+}
+.projectCard h3{
+    transition: all .3s;
+}
+.projectCard a{
+    text-decoration: none;
+    color: white;
+    display: flex;
+}
+.projectCard:hover {
+    opacity: 1;
+    transform: translateY(-20%);
+}
+.projectCard:active{
+    color: #de9a34;
+}
+
+.projectCard:hover h3{
+    letter-spacing: 8px;
+    text-decoration: line-through;
+    color: #de9a34;
+}
+
+.projectNumber{
+    font-size: 50px;
+    margin-right: 1rem;
+}
+
+.projectDetails{
+    text-align: left;
+    align-content: center;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+.projectDetails p{
+    font-size: 10px;
+}
+
+@media (max-width: 1000px){
+    .projectCard{
+        max-width: 100%;
+    }    
+}

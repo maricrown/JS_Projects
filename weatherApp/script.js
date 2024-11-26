@@ -36,6 +36,8 @@ async function getPlaceWeather() {
 
 async function fetchWeatherByCoords(lat, lon) {
     try{
+        document.getElementById("loader").style.maxHeight = "100%";
+
         //fetch data from api
         const weatherResponse =  await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&current=apparent_temperature,is_day,precipitation_probability,rain,snowfall,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high");
         if(!weatherResponse.ok){ throw new Error("Error consulting "+placeWeatherData.city+"'s weather");}
@@ -47,6 +49,8 @@ async function fetchWeatherByCoords(lat, lon) {
         placeWeatherData.isDayTime = weatherData.current.is_day;
         placeWeatherData.isRaining = weatherData.current.rain;
         placeWeatherData.isSnowing = weatherData.current.snowfall;
+
+        document.getElementById("loader").style.maxHeight = "0";
 
         //Change cloudiness depending on how cloudy it is. If day time it's sunny, if it's nighttime it's clear.
         placeWeatherData.cloudiness = placeWeatherData.isDayTime == 1 ? "sunny" : "clear";
@@ -114,6 +118,7 @@ async function fetchPlaceCoordsByName(){
     
     //Get place name value from input.
     const placeNameInput = document.getElementById("placeNameInput").value.toLowerCase();
+    document.getElementById("placeNameInput").value="";
     try{
         //Fetch place data using name query.
         const placeResponse = await fetch(`https://nominatim.openstreetmap.org/search.php?q=${placeNameInput}&limit=1&format=jsonv2&addressdetails=1`);
@@ -222,10 +227,11 @@ function updateAppTheme(){
     const weatherIcons = document.querySelectorAll(".weatherIcon");
     
     if(placeWeatherData.isDayTime == 1){
+        console.log("daytime")
+        weatherDataContainer.style.backgroundImage = "var(--dayGradient)";
         cardContainer.style.backgroundColor = "var(--dayAccentColor)";
         searchButtonSvg.style.fill = "var(--dayAccentColor)";
-        weatherDataContainer.style.backgroundImage = "none";
-        weatherDataContainer.backgroundColor = "var(--dayBackground)";
+        //weatherDataContainer.backgroundColor = "var(--dayBackground)";
         weatherIcons.forEach( (icon) => {
             icon.style.backgroundColor = "var(--dayAccentColor)";
         })

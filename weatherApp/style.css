@@ -5,37 +5,22 @@
     --dayAccentColor: #dc8f4c;
     --dayBackground: #F1D2B7;
     --nightAccentColor: rgb(20, 17, 35);
+    --dayGradient: linear-gradient(#ffefe0,#F1D2B7);
     --nightGradient: linear-gradient(rgb(88, 85, 133), #8c5656);
 
 }
 *{
-    margin: 0;
-    padding: 0;
     transition: background-color .3s, width.3s, height .3s;
-    
 } 
-
-body{
-    color: black;
-    width: 100vw;
-    height: 100vh;
-    font-family: 'Quicksand';
-    background-color: var(--mainBackground);
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    text-align: center;
-}
 
 .card {
     margin: 1rem;
-    background-color: var(--dayAccentColor);
     box-shadow: 5px 10px 8px #000000;
     border-radius: 10px;
     height: fit-content;
     width: fit-content;
     overflow: hidden;
-    animation: fadeIn 3s ease-in;
+    animation: fadeIn 1s ease-in;
 }
 
 .searchBar{
@@ -46,6 +31,7 @@ body{
     justify-content: center;
     align-content: center;
     text-align: center;
+    animation: fadeIn 1s ease-in;
 }
 
 .searchBox{
@@ -57,6 +43,7 @@ body{
     width: 100%;
     opacity: .5;
     transition: all .5s;
+    animation: fadeIn 1s ease-in;
 }
 
 .searchBox:hover{
@@ -73,12 +60,10 @@ body{
     padding: .2rem;
     border-radius: 50px;
     opacity: .5;
+    animation: fadeIn 1s ease-in;
     transition: all .5s;
 }
 
-.searchButton svg{
-    fill: var(--dayAccentColor);
-}
 
 .searchButton:hover{
     opacity: 1;
@@ -88,7 +73,6 @@ body{
 .weatherData{
     height: fit-content;
     padding: 2rem;
-    background: var(--dayBackground); 
     transition: all .5s;   
 }
 
@@ -104,7 +88,7 @@ body{
     mask-size: contain;
     height: 150px;
     mask-repeat: no-repeat;
-    background-color: var(--dayAccentColor);
+    transition: all .5s;
 }
 
 .weatherDetails{
@@ -142,6 +126,43 @@ body{
     animation: fadeOut 3s;
 }
 
+.instructions{
+    width: 350px;
+    color: white;
+    text-align: left;
+    margin-inline: 1rem;
+}
+
+.instructions a{
+    color: white;
+}
+.usedTechnologies{
+    display: flex;
+    flex-direction: row;
+    animation: fadeIn 1s ease-in;
+}
+
+.loader {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    margin: 0 auto;
+    transition: all 1s;
+}
+
+.loader > div{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50px;
+    margin: .5rem;
+
+    background-color: wheat;
+    animation: loader-animation .6s infinite alternate;
+
+}
 
 @keyframes fadeIn {
     0%{
@@ -153,7 +174,7 @@ body{
         opacity: 0;
     }
     70%{
-        opacity: .7;
+        opacity: .5;
     }
     100%{
         transform: translateY(0%);
@@ -161,18 +182,17 @@ body{
     }
 }
 
-@keyframes fadeOut {
-    0%{
-        transform: translateY(-20%);
-        opacity: 1;
+@keyframes loader-animation {
+    to{
+        opacity: .1;
+        transform: translate3d(0, -.5rem, 0);
     }
-    20%{
-        opacity: .7;
-    }
-    70%{
-        opacity: .0;
-    }
-    100%{
-        transform: translateY(0%);
-    }
+}
+
+.loader > div:nth-child(2){
+    animation-delay: .2s;
+}
+
+.loader > div:nth-child(3){
+    animation-delay: .4s;
 }
