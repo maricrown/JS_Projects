@@ -11,6 +11,11 @@
     --mainBackground: rgb(9, 9, 9);
     --textColor: white;
     --accentColor: #de9a34;
+    --dayAccentColor: #dc8f4c;
+    --nightAccentColor: rgb(20, 17, 35);
+    --dayGradient: linear-gradient(#baaa74, #db9b3a);
+    --nightGradient: linear-gradient(rgb(88, 85, 133), #8c5656);
+
 }
 *{
     margin: 0;
@@ -29,21 +34,22 @@ body{
 }
 
 .card {
-    background-color: gray;
+    margin: 1rem;
+    background-color: var(--dayAccentColor);
+    box-shadow: 5px 10px 8px #000000;
     border-radius: 10px;
     height: fit-content;
-    width: fit-content;
+    width: 300px;
+    overflow: hidden;
 }
 
 .searchBar{
-    margin: 1rem;
+    padding: 1rem;
     height: fit-content;
-    width: fit-content;
     display: flex;
     gap: 10px;
-
     justify-content: center;
-    align-items: center;
+    align-content: center;
     text-align: center;
 }
 
@@ -53,6 +59,7 @@ body{
     border-radius: 50px;
     border-style: none;
     opacity: .5;
+    width: 100%;
     transition: all .5s;
 }
 
@@ -61,7 +68,7 @@ body{
 }
 
 .searchButton{
-    background-color: var(--accentColor);
+    background-color: white;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -69,13 +76,99 @@ body{
     border-style: none;
     padding: .2rem;
     border-radius: 50px;
+    opacity: .5;
     transition: all .5s;
 }
 
+.searchButton svg{
+    fill: var(--dayAccentColor);
+}
+
 .searchButton:hover{
+    opacity: 1;
     scale: 1.1;
 }
 
 .weatherData{
+    height: fit-content;
+    padding: 2rem;
+    background: white;
+    opacity: .6;
+}
 
+.weatherData h3{
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 20px;
+}
+
+
+.weatherIcon{
+    mask-position: center;
+    mask-size: contain;
+    height: 150px;
+    mask-repeat: no-repeat;
+
+    background-color: var(--dayAccentColor);
+    mask-image: url(../assets/sunny.svg);
+}
+
+.weatherDetails{
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+    margin-block: 1rem;
+}
+
+.weatherDetailsRows{
+    width: fit-content;
+    height: fit-content;
+}
+
+.weatherDetailsRows .detailRow{
+    margin-block: 5px;
+    display: flex;
+    flex-direction: row;
+    height: min-content;
+    align-items: center;
+    width: 100%;
+}
+
+.weatherDetailsRows .detailRow h5{
+    width: fit-content;
+    margin-left: .5rem;
+}
+
+@keyframes fadeIn {
+    0%{
+        transform: translateY(20%);
+        opacity: 0;
+    }
+    20%{
+        transform: translateY(15%);
+        opacity: 0;
+    }
+    70%{
+        opacity: .7;
+    }
+    100%{
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0%{
+        transform: translateY(-20%);
+        opacity: 1;
+    }
+    20%{
+        opacity: .7;
+    }
+    70%{
+        opacity: .0;
+    }
+    100%{
+        transform: translateY(0%);
+    }
 }

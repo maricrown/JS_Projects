@@ -3,7 +3,7 @@ A simple weather web app which will tell you what is the weather like in your lo
 ## Resources
 This weather app uses two free APIs:
 <ul>
-<li><a href="https://nominatim.org/">Nominatim.</a> To get searched place's coordinates.</li>
+<li><a href="https://nominatim.org/">Nominatim.</a> To get place's coordinates.</li>
 <li><a href="https://open-meteo.com/">Open-Meteo.</a> To look up place's weather.</li>
 </ul>
 
