@@ -5,6 +5,7 @@ This weather app uses two free APIs:
 <ul>
 <li><a href="https://nominatim.org/">Nominatim.</a> To get place's coordinates.</li>
 <li><a href="https://open-meteo.com/">Open-Meteo.</a> To look up place's weather.</li>
+<li><a href="https://fonts.google.com/">Google fonts.</a> For both fonts and icons.</li>
 </ul>
 
 
