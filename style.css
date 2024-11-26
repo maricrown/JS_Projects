@@ -72,6 +72,7 @@ nav a:hover{
 }
 
 .projectCard{
+    margin-top: 1rem;
     cursor: pointer;
     max-width: 48vw;
     display: flex;
