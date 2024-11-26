@@ -109,6 +109,7 @@ async function fetchPlaceNameByCoords(){
 
         //Else the navigator cannot get user's coords and rejects.
         }else{
+           
             reject(error);
         }
     });    
@@ -227,7 +228,6 @@ function updateAppTheme(){
     const weatherIcons = document.querySelectorAll(".weatherIcon");
     
     if(placeWeatherData.isDayTime == 1){
-        console.log("daytime")
         weatherDataContainer.style.backgroundImage = "var(--dayGradient)";
         cardContainer.style.backgroundColor = "var(--dayAccentColor)";
         searchButtonSvg.style.fill = "var(--dayAccentColor)";
