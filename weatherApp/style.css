@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 :root{
     --mainBackground: rgb(9, 9, 9);
     --textColor: white;
@@ -10,5 +18,64 @@
 } 
 
 body{
-    
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Quicksand';
+    background-color: var(--mainBackground);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+}
+
+.card {
+    background-color: gray;
+    border-radius: 10px;
+    height: fit-content;
+    width: fit-content;
+}
+
+.searchBar{
+    margin: 1rem;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    gap: 10px;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.searchBox{
+    margin: 0%;
+    padding: .7rem;
+    border-radius: 50px;
+    border-style: none;
+    opacity: .5;
+    transition: all .5s;
+}
+
+.searchBox:hover{
+    opacity: 1;
+}
+
+.searchButton{
+    background-color: var(--accentColor);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    border-style: none;
+    padding: .2rem;
+    border-radius: 50px;
+    transition: all .5s;
+}
+
+.searchButton:hover{
+    scale: 1.1;
+}
+
+.weatherData{
+
 }

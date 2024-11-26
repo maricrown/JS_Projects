@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maricrown | Calculator</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div class="card">
-        <input id="placeNameInput" class="translatable" type="text" placeholder="Search for a place..." spellcheck="false"/>
-        <button onclick="fetchPlaceCoordsByName()">search</button>
+        <div class="searchBar">
+            <input id="placeNameInput" class="searchBox translatable" type="text" placeholder="Search for a place..." spellcheck="false"/>
+            <button class="searchButton" onclick="getPlaceWeather()">
+                <img src="./search.svg" alt="Icon description"></i>
+            </button>
+        </div>
+        <div class="weatherData">
+            
+        </div>
     </div>
 </body>
 <script src="./script.js"></script>
