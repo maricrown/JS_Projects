@@ -1,28 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
-}
 
 :root{
     --mainBackground: rgb(9, 9, 9);
-    --textColor: white;
-    --accentColor: #de9a34;
     --dayAccentColor: #dc8f4c;
+    --dayBackground: #F1D2B7;
     --nightAccentColor: rgb(20, 17, 35);
-    --dayGradient: linear-gradient(#baaa74, #db9b3a);
     --nightGradient: linear-gradient(rgb(88, 85, 133), #8c5656);
 
 }
 *{
     margin: 0;
     padding: 0;
+    transition: background-color .3s, width.3s, height .3s;
+    
 } 
 
 body{
+    color: black;
     width: 100vw;
     height: 100vh;
     font-family: 'Quicksand';
@@ -39,8 +33,9 @@ body{
     box-shadow: 5px 10px 8px #000000;
     border-radius: 10px;
     height: fit-content;
-    width: 300px;
+    width: fit-content;
     overflow: hidden;
+    animation: fadeIn 3s ease-in;
 }
 
 .searchBar{
@@ -54,12 +49,13 @@ body{
 }
 
 .searchBox{
+    color: #000000;
     margin: 0%;
     padding: .7rem;
     border-radius: 50px;
     border-style: none;
-    opacity: .5;
     width: 100%;
+    opacity: .5;
     transition: all .5s;
 }
 
@@ -92,8 +88,8 @@ body{
 .weatherData{
     height: fit-content;
     padding: 2rem;
-    background: white;
-    opacity: .6;
+    background: var(--dayBackground); 
+    transition: all .5s;   
 }
 
 .weatherData h3{
@@ -108,9 +104,7 @@ body{
     mask-size: contain;
     height: 150px;
     mask-repeat: no-repeat;
-
     background-color: var(--dayAccentColor);
-    mask-image: url(../assets/sunny.svg);
 }
 
 .weatherDetails{
@@ -131,6 +125,7 @@ body{
     flex-direction: row;
     height: min-content;
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
@@ -138,6 +133,15 @@ body{
     width: fit-content;
     margin-left: .5rem;
 }
+
+.fadeIn{
+    animation: fadeIn 3s;
+}
+
+.fadeOut{
+    animation: fadeOut 3s;
+}
+
 
 @keyframes fadeIn {
     0%{
