@@ -123,7 +123,7 @@ function addNewTaskList(){
         initUserTasksView();
         toggleAlertOverlay();
         selectedTaskList = newTaskList.id;
-        initSelectedListTasks(selectedTaskList, newTaskList.title, newTaskList.tasks);
+        initSelectedListTasks(selectedTaskList);
         setSelectedListById(selectedTaskList,true);
     }
 
@@ -148,7 +148,7 @@ function addNewTask(){
                     list.tasks+=","+newTaskName+0;
                 }
                 initUserTasksView();
-                initSelectedListTasks(selectedTaskList, list.title, list.tasks);
+                initSelectedListTasks(selectedTaskList);
                 return;
             }
         });
@@ -161,7 +161,7 @@ function deleteList(){
     const userTaksLists = currentUser.taskLists;
 
     initAlertOverlay("Do you really want to delete this list?",function(){
-        userTaksLists.splice(userTaksLists.indexOf(selectedTaskList),1);
+        userTaksLists.splice(userTaksLists[selectedTaskList],1);
         initUserTasksView();
         toggleAlertOverlay();
     });
@@ -169,7 +169,7 @@ function deleteList(){
 }
 
 function deleteTask(taskToDelete){
-    const listTasks = currentUser.taskLists[selectedTaskList].tasks;
+    const listTasks = getTaskListById(selectedTaskList).tasks;
     const tasksArray = listTasks.split(',');
     
     initAlertOverlay("Do you really want to delete this task?",function(){
@@ -180,9 +180,9 @@ function deleteTask(taskToDelete){
             }
         });
         updatedTasks = updatedTasks.substring(0, updatedTasks.length-1);
-        currentUser.taskLists[selectedTaskList].tasks = updatedTasks;
+        getTaskListById(selectedTaskList).tasks = updatedTasks;
         initUserTasksView();
-        initSelectedListTasks(selectedTaskList,currentUser.taskLists[selectedTaskList].title,currentUser.taskLists[selectedTaskList].tasks);
+        initSelectedListTasks(selectedTaskList);
         toggleAlertOverlay();
     });
     toggleAlertOverlay();
@@ -191,6 +191,7 @@ function deleteTask(taskToDelete){
 function checkTask(caller){
     const tasksArray = getSelectedListTasksArray();
     const checkedTask = caller.value;
+
     for(let i = 0; i < tasksArray.length; i++ ){
         if(tasksArray[i] == checkedTask){
             let state = tasksArray[i].slice(-1) == 1 ? 0 : 1;
@@ -198,17 +199,28 @@ function checkTask(caller){
             tasksArray[i] = task;
         }
     }
-    currentUser.taskLists[selectedTaskList].tasks = tasksFromArrayToString(tasksArray);
+   
+    currentUser.taskLists.forEach(list =>{
+        if(list.id == selectedTaskList){
+            list.tasks = tasksFromArrayToString(tasksArray);
+        } 
+    });
+    //currentUser.taskLists[selectedTaskList].tasks = 
     initUserTasksView();
-    initSelectedListTasks(selectedTaskList,currentUser.taskLists[selectedTaskList].title,currentUser.taskLists[selectedTaskList].tasks);
+    initSelectedListTasks(selectedTaskList);
 
 }
 
 /*UTILS*/
 function getSelectedListTasksArray(){
-    const listTasks = currentUser.taskLists[selectedTaskList].tasks;
-    const tasksArray = listTasks.split(',');
-    return tasksArray;
+    var listTasks = "";
+    currentUser.taskLists.forEach(list=>{
+        if(list.id == selectedTaskList){
+            listTasks = list.tasks;
+        }
+    });
+    return listTasks.split(',');
+
 }
 
 function tasksFromArrayToString(taskArray){
@@ -218,6 +230,16 @@ function tasksFromArrayToString(taskArray){
     });
     tasksString = tasksString.slice(0, -1);
     return tasksString;
+}
+
+function getTaskListById(id){
+    var returnList = {};
+    currentUser.taskLists.forEach(list => {
+        if(list.id == id){
+            returnList = list;
+        }
+    });
+    return returnList;
 }
 
 
@@ -285,19 +307,22 @@ function initUserTasksView(){
         +'listId="'+list.id+'"'
         +'onclick="initSelectedListTasks('
         +list.id
-        +',\''
-        +list.title
-        +'\',\''
-        +list.tasks
-        +'\'); setSelectedList(this)">'
+        +'); setSelectedListById('+list.id+',true)">'
         +list.title
         +'</div>'
     });
     taskListsList.innerHTML = taskListsListInnerHtml;
 }
 
-function initSelectedListTasks(id,listTitle, tasks){
-    selectedTaskList = id;
+function initSelectedListTasks(id){
+    var listTitle = "";
+    var tasks = "";
+    currentUser.taskLists.forEach(list => {
+        if(list.id == id){
+            title = list.title;
+            tasks = list.tasks;
+        }
+    })
 
     const taskActions = document.getElementById("taskActions");
     taskActions.style.maxHeight = "fit-content";
@@ -359,25 +384,21 @@ function setSelectedAvatar(name){
     
 }
 
-function setSelectedList(listElement){
-    Array.from(document.getElementsByClassName("taskList")).forEach(taskList => {
-        taskList.classList.remove("selectedList");
-    });
-    listElement.classList.add("selectedList");
-    toggleMenu();
-}
-
 function setSelectedListById(id,toggle){
+    selectedTaskList = id;
     Array.from(document.getElementsByClassName("taskList")).forEach(taskList => {
         taskList.classList.remove("selectedList");
         if(taskList.getAttribute("listId").match(id)){
             taskList.classList.add("selectedList");
+            document.getElementById('taskListTitle').innerHTML = getTaskListById(id).title;
             if(toggle){
                 toggleMenu();
             }
         }
     });
 }
+
+
 
 /*VIEW TOGGLING*/
 function toggleAlertOverlay(){
@@ -413,4 +434,9 @@ function toggleView(id){
 function toggleMenu(){
     const menuIsActive = document.getElementById("menuIsActive");
     menuIsActive.checked = !menuIsActive.checked;
+}
+
+/*? BUTTON*/
+function toggleData(){
+
 }

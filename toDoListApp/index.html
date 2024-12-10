@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="../style.css">
 </head>
-<body>
+<body style="height: fit-content;">
     <div id="alertOverlay" class="alert">
         <div class="alertContent">
             <div id="alertMessage" class="alertMessage">
@@ -39,82 +39,90 @@
             </a>
         </abbr>
     </nav>
-    <div class="toDoListApp">
-        <div id="loginView" class="login">
-            <div class="row">
-                <div id="loginUserThumbnails" class="profiles">
-                 
+    <div>
+        <div class="toDoListApp">
+            <div id="loginView" class="login">
+                <div class="row">
+                    <div id="loginUserThumbnails" class="profiles">
+                    
+                    </div>
+                    <div class="newProfile" onclick="{toggleNewUserView(); toggleLoginView();}">
+                        <h3>
+                            +
+                        </h3>
+                    </div>
+
                 </div>
-                <div class="newProfile" onclick="{toggleNewUserView(); toggleLoginView();}">
-                    <h3>
-                        +
-                    </h3>
+                <div class="loginTitle">
+                    Select an existing user or create a new one.
                 </div>
+            </div>
 
+            <div id="newUserView" class="newUserView">
+                <div class="newUserViewTitle">
+                    <button class="mainButton" onclick="returnFromNewUserView()">return</button>
+                    Select an avatar!
+                </div>
+                <div id="availableAvatars" class="avatars">
+                    <div class="avatar" style="background-image: url(../assets/avatars/1.png);" value="1.png" onclick="setSelectedAvatar('1.png')"></div>
+                    <div class="avatar" style="background-image: url(../assets/avatars/2.png);" value="2.png" onclick="setSelectedAvatar('2.png')"></div>
+                    <div class="avatar" style="background-image: url(../assets/avatars/3.png);" value="3.png" onclick="setSelectedAvatar('3.png')"></div>
+                </div>
+                <div class="newUserData">
+                    <input id="newUserNickname" class="newUserNickname" type="text" placeholder="Enter a nickname!" maxlength="7"/>
+                    <button class="mainButton" onclick="saveUser()">ok</button>
+                </div>
             </div>
-            <div class="loginTitle">
-                Select an existing user or create a new one.
-            </div>
-        </div>
 
-        <div id="newUserView" class="newUserView">
-            <div class="newUserViewTitle">
-                <button class="mainButton" onclick="returnFromNewUserView()">return</button>
-                Select an avatar!
-            </div>
-            <div id="availableAvatars" class="avatars">
-                <div class="avatar" style="background-image: url(../assets/avatars/1.png);" value="1.png" onclick="setSelectedAvatar('1.png')"></div>
-                <div class="avatar" style="background-image: url(../assets/avatars/2.png);" value="2.png" onclick="setSelectedAvatar('2.png')"></div>
-                <div class="avatar" style="background-image: url(../assets/avatars/3.png);" value="3.png" onclick="setSelectedAvatar('3.png')"></div>
-            </div>
-            <div class="newUserData">
-                <input id="newUserNickname" class="newUserNickname" type="text" placeholder="Enter a nickname!" maxlength="7"/>
-                <button class="mainButton" onclick="saveUser()">ok</button>
-            </div>
-        </div>
-
-        <div id="userTasksView" class="userTasks">
-            <div class="userTasksNavBar">
-                <div class="topRow">
-                    <label for="menuIsActive">
-                        <div class="taskListsMenu"></div>
-                    </label>
-                    <div class="currentUserData">
-                        <div id="currentUserAvatar" class="currentUser"></div>
-                        <div class="currentUserName">
-                            <p id="currentUserName" class="userName">userName</p>
-                            <div class="actions">
-                                <button class="customButton collapsed" onclick="editUser()"><img src="../assets/editPencil.svg"/>Edit user</button>
-                                <button class="customButton collapsed" onclick="deleteUser()"><img src="../assets/trashCan.svg"/>Delete user</button>
-                                <button class="customButton collapsed" onclick="logout()"><img src="../assets/logout.svg"/>Logout</button>
+            <div id="userTasksView" class="userTasks">
+                <div class="userTasksNavBar">
+                    <div class="topRow">
+                        <label for="menuIsActive">
+                            <div class="taskListsMenu"></div>
+                        </label>
+                        <div class="currentUserData">
+                            <div id="currentUserAvatar" class="currentUser"></div>
+                            <div class="currentUserName">
+                                <p id="currentUserName" class="userName">userName</p>
+                                <div class="actions">
+                                    <button class="customButton collapsed" onclick="editUser()"><img src="../assets/editPencil.svg"/>Edit user</button>
+                                    <button class="customButton collapsed" onclick="deleteUser()"><img src="../assets/trashCan.svg"/>Delete user</button>
+                                    <button class="customButton collapsed" onclick="logout()"><img src="../assets/logout.svg"/>Logout</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="titleWrapper">
+                        <h3 id="taskListTitle" class="taskListTitle"> Title</h3>
+                    </div>
                 </div>
-                <div class="titleWrapper">
-                    <h3 id="taskListTitle" class="taskListTitle"> Title</h3>
+                <div class="content">
+                    <input id="menuIsActive" type="checkbox"/>
+                    <div class="taskLists">
+                        <div id="taskListsList">
+                            
+                        </div>
+                        <button class="customButton orange" onclick="createTaskList()"><img src="../assets/add.svg"/>New Tasklist</button>
+                    </div>
+                    <div class="taskListDetails">
+                        <div id="listTasks" class="tasks">
+                            
+                        </div>
+                        <div id="taskActions" class="actions">
+                            <button class="customButton orange expanded" onclick="createTask()"><img src="../assets/add.svg"/>New Task</button>
+                            <button class="customButton orange expanded" onclick="deleteList()"><img src="../assets/trashCan.svg"/>Delete list</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="content">
-                <input id="menuIsActive" type="checkbox"/>
-                <div class="taskLists">
-                    <div id="taskListsList">
-                        
-                    </div>
-                    <button class="customButton orange" onclick="createTaskList()"><img src="../assets/add.svg"/>New Tasklist</button>
-                </div>
-                <div class="taskListDetails">
-                    <div id="listTasks" class="tasks">
-                        
-                    </div>
-                    <div id="taskActions" class="actions">
-                        <button class="customButton orange expanded" onclick="createTask()"><img src="../assets/add.svg"/>New Task</button>
-                        <button class="customButton orange expanded" onclick="deleteList()"><img src="../assets/trashCan.svg"/>Delete list</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+        </div>
+        <div class="aboutInfo">
+            
+        </div>
+        <div class="moreInfoButton">
+            ?
+        </div>
     </div>
    
   

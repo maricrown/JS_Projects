@@ -1,3 +1,24 @@
+.aboutInfo{
+    
+}
+.moreInfoButton{
+    cursor: pointer;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background-color: rgb(255, 128, 0);
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    padding: auto;
+    text-align: center;
+    align-content: center;
+
+}
+
 .toDoListApp{
     display: flex;
     width: 100vw;
@@ -182,19 +203,6 @@
 }
 
 /*===============NEW USER VIEW==============*/
-/*.newUserView{
-    background-color: violet;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-self: stretch;
-    margin: 5rem;
-    border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    
-    
-}*/
 .newUserView{
     overflow: hidden;
     max-width: 1000px;
