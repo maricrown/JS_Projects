@@ -120,7 +120,44 @@
         <div class="aboutInfo">
             
         </div>
-        <div class="moreInfoButton">
+        
+        <div id="moreAboutInfoWrapper" class="moreAboutInfoWrapper">
+            <div class="moreAboutInfo">
+                <h2>To do list web app</h2>
+                <p>*** Click on the '?' again, to toggle this info.</p>
+                <p>This web app is a static live demo, which means that the data you introduce in here is not stored in a db, therefore, whenever you reload this webpage, data will be lost.</p>
+                <p>This to do list web app allows you to create and manage tasks within lists wihin user profiles.</p>
+                <br>
+                <h3>Features</h3>
+                <ul>
+                    <li>Create, edit, login, logout or delete user profiles!</li>
+                    <li>Choose an avatar from available designs, all avatars are designed by <a href="https://www.freepik.com/" >Freepik</a>.</li>
+                    <li>Create or delete task lists.</li>
+                    <li>Create, check or delete tasks.</li>
+                    <li>Responsive design.</li>
+                </ul>
+                <br>
+                <h3>Resources</h3>
+                <ul>
+                    <li>Avatar designs by <a href="https://www.freepik.com/">Freepik</a>.</li>
+                    <li>'Quicksand' font by <a href="https://fonts.google.com/">Google Fonts</a>.</li>
+                    <li>Icons by <a href="https://fonts.google.com/">Google Fonts</a>.</li>
+                </ul>
+                <div class="usedTechnologies">
+                    <div class="technologyIcon" style="mask-image: url('../assets/css.svg'); width: 40px; height: 40px;"></div>
+                    <div class="technologyIcon" style="mask-image: url('../assets/html.svg'); width: 40px; height: 40px; margin-left: .3rem;"></div>
+                    <div class="technologyIcon" style="mask-image: url('../assets/javascript.svg'); width: 40px; height: 40px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="moreInfoButton" onclick="{
+            const aboutInfo = document.getElementById('moreAboutInfoWrapper'); 
+            if(aboutInfo.style.maxHeight.includes(100)){
+                aboutInfo.style.maxHeight = 0;
+            }else{
+                aboutInfo.style.maxHeight = '100%';
+            }
+        }">
             ?
         </div>
     </div>

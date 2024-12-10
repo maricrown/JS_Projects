@@ -1,5 +1,38 @@
-.aboutInfo{
-    
+.moreAboutInfoWrapper{
+    overflow: hidden;
+    max-height: 0%;
+    background-color: rgba(0, 0, 0, 0.692);
+    color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    backdrop-filter: blur(3px);
+    position: absolute;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    transition: all .3s;
+}
+.moreAboutInfo{
+    overflow: scroll;
+    max-height: 80vh;
+    margin-top: 5rem;
+    margin-inline: 3rem;
+    margin-bottom: 3rem;
+    width: fit-content;
+    height: fit-content;
+    text-align: justify;
+}
+.moreAboutInfo a{
+    color: orange;
+}
+.moreAboutInfo p{
+    padding: .5rem;
+}
+.moreAboutInfo ul{
+    margin-left: 3rem;
 }
 .moreInfoButton{
     cursor: pointer;
@@ -16,7 +49,27 @@
     padding: auto;
     text-align: center;
     align-content: center;
-
+}
+.moreInfoButton:hover{
+    background-color: orangered;
+}
+.usedTechnologies{
+    margin-block: .3rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: end;
+    align-content: end;
+    justify-content: end;
+    justify-items: center;
+}
+.technologyIcon{
+    mask-position: center;
+    mask-size: contain;
+    height: 150px;
+    mask-repeat: no-repeat;
+    transition: all .5s;
+    background-color: orange;
 }
 
 .toDoListApp{
