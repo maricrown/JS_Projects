@@ -1,9 +1,25 @@
 
+/*TEST DATA*/
+const data = [
+    {
+        "name" : "Default",
+        "avatar" : "1.png",
+        "id" : 1,
+        "taskLists" : [
+            {
+                "id" : 0,
+                "title": "Sample task list",
+                "tasks": "Task 10,Task 20"
+            }
+        ]
+    }
+];
+
+
 /*INIT VARIABLES*/
 var users = [];
-var currentUser = "";
-var currentTaskLists = "";
-var currentTaskList = "";
+var currentUser = {};
+var selectedTaskList = -1;
 var currentTasks = [];
 
 /*GLOBAL VARIABLES*/
@@ -14,7 +30,6 @@ function loginSelectedUser(caller){
     users.forEach(user => {
         if(caller.getAttribute("userId") == user.id){
             currentUser = user;
-            currentTaskLists = user.taskLists;
             return;
         }
     });
@@ -86,57 +101,125 @@ function editUser(){
 }
 
 function createTaskList(){
-    initAlertOverlay("Write your task list's title here!", function(){console.log("hi")});
+    var innerAlert = '<input id="newTaskListName" class="roundedTextBox" type="text" placeholder="Enter new list title!"/>';
+    initAlertOverlay(innerAlert, addNewTaskList);
+    toggleAlertOverlay();
+}
 
+function addNewTaskList(){
+    const newTaskListName = document.getElementById("newTaskListName").value;
+    if(newTaskListName.replace(/\s/g, '').length <= 0){
+        alert("Please write something in the text field");
+    }else{
+
+        let lastTaskListId = currentUser.taskLists.length <= 0 ? 0 : currentUser.taskLists[currentUser.taskLists.length-1].id;
+        var newTaskList = {};
+        newTaskList.id  = lastTaskListId+1;
+        newTaskList.title = newTaskListName;
+        newTaskList.tasks = "";
+
+        currentUser.taskLists.push(newTaskList);
+
+        initUserTasksView();
+        toggleAlertOverlay();
+        selectedTaskList = newTaskList.id;
+        initSelectedListTasks(selectedTaskList, newTaskList.title, newTaskList.tasks);
+        setSelectedListById(selectedTaskList,true);
+    }
+
+}
+
+function createTask(){
+    var innerAlert = '<input id="newTaskDescription" class="roundedTextBox" type="text" placeholder="Enter task here!"/>';
+    initAlertOverlay(innerAlert, addNewTask);
     toggleAlertOverlay();
 }
 
 function addNewTask(){
-    toggleAlertOverlay();
-}
-
-function editListTitle(){
-    const taskListTitle = document.getElementById("taskListTitle");
+    const newTaskName = document.getElementById("newTaskDescription").value;
+    if(newTaskName.replace(/\s/g, '').length <= 0){
+        alert("Please write something in the text field");
+    }else{
+        currentUser.taskLists.forEach(list => {
+            if(list.id == selectedTaskList){
+                if(list.tasks.length <= 0){
+                    list.tasks+=newTaskName+0;
+                }else{
+                    list.tasks+=","+newTaskName+0;
+                }
+                initUserTasksView();
+                initSelectedListTasks(selectedTaskList, list.title, list.tasks);
+                return;
+            }
+        });
+        toggleAlertOverlay();
+    }
+    
 }
 
 function deleteList(){
+    const userTaksLists = currentUser.taskLists;
+
+    initAlertOverlay("Do you really want to delete this list?",function(){
+        userTaksLists.splice(userTaksLists.indexOf(selectedTaskList),1);
+        initUserTasksView();
+        toggleAlertOverlay();
+    });
     toggleAlertOverlay();
 }
 
-/*TEST DATA*/
-const data = [
-    {
-        "name" : "test",
-        "avatar" : "1.png",
-        "id" : 0,
-        "taskLists" : [
-            {
-                "title": "tasklist1",
-                "tasks": ["Make something...0,Make something 1...1"]
-            },
-            {
-                "title": "tasklist2",
-                "tasks": ["Make something...1,Make something 2...0"]
-                
+function deleteTask(taskToDelete){
+    const listTasks = currentUser.taskLists[selectedTaskList].tasks;
+    const tasksArray = listTasks.split(',');
+    
+    initAlertOverlay("Do you really want to delete this task?",function(){
+        var updatedTasks = "";
+        tasksArray.forEach(task =>{
+            if(task != taskToDelete){
+                updatedTasks += task+",";
             }
-        ]
-    },
-    {
-        "name" : "test2",
-        "avatar" : "2.png",
-        "id" : 1,
-        "taskLists" : [
-            {
-                "title": "tasklist1",
-                "tasks": ["Make something...0,Make something 2...0"]
-            },
-            {
-                "title": "tasklist2",
-                "tasks": ["Make second something...1,Make second something 2...1"]
-            }
-        ]
+        });
+        updatedTasks = updatedTasks.substring(0, updatedTasks.length-1);
+        currentUser.taskLists[selectedTaskList].tasks = updatedTasks;
+        initUserTasksView();
+        initSelectedListTasks(selectedTaskList,currentUser.taskLists[selectedTaskList].title,currentUser.taskLists[selectedTaskList].tasks);
+        toggleAlertOverlay();
+    });
+    toggleAlertOverlay();
+}
+
+function checkTask(caller){
+    const tasksArray = getSelectedListTasksArray();
+    const checkedTask = caller.value;
+    for(let i = 0; i < tasksArray.length; i++ ){
+        if(tasksArray[i] == checkedTask){
+            let state = tasksArray[i].slice(-1) == 1 ? 0 : 1;
+            var task = tasksArray[i].slice(0, -1)+state;
+            tasksArray[i] = task;
+        }
     }
-];
+    currentUser.taskLists[selectedTaskList].tasks = tasksFromArrayToString(tasksArray);
+    initUserTasksView();
+    initSelectedListTasks(selectedTaskList,currentUser.taskLists[selectedTaskList].title,currentUser.taskLists[selectedTaskList].tasks);
+
+}
+
+/*UTILS*/
+function getSelectedListTasksArray(){
+    const listTasks = currentUser.taskLists[selectedTaskList].tasks;
+    const tasksArray = listTasks.split(',');
+    return tasksArray;
+}
+
+function tasksFromArrayToString(taskArray){
+    tasksString = "";
+    taskArray.forEach(task =>{
+        tasksString += task + ",";
+    });
+    tasksString = tasksString.slice(0, -1);
+    return tasksString;
+}
+
 
 /*INIT VIEW DATA*/
 initToDoListApp();
@@ -187,7 +270,7 @@ function initUserTasksView(){
     taskListTitle.innerHTML = "";
 
     const listTasks = document.getElementById("listTasks");
-    listTasks.innerHTML = "<div style='margin: auto; text-align: center; padding: 5rem;'>Choose a task list from the menu on the left or click on the plus sign to create a new one!</div>";
+    listTasks.innerHTML = "<div style='margin: auto; text-align: center; padding: 5rem; padding-top: 0'>Choose a task list from the menu on the left or click on the plus sign to create a new one!</div>";
 
 
     var taskLists = currentUser.taskLists;
@@ -199,7 +282,10 @@ function initUserTasksView(){
 
     taskLists.forEach(list => {
         taskListsListInnerHtml += '<div class="taskList"'
-        +'onclick="initSelectedListTasks(\''
+        +'listId="'+list.id+'"'
+        +'onclick="initSelectedListTasks('
+        +list.id
+        +',\''
         +list.title
         +'\',\''
         +list.tasks
@@ -210,7 +296,9 @@ function initUserTasksView(){
     taskListsList.innerHTML = taskListsListInnerHtml;
 }
 
-function initSelectedListTasks(listTitle, tasks){
+function initSelectedListTasks(id,listTitle, tasks){
+    selectedTaskList = id;
+
     const taskActions = document.getElementById("taskActions");
     taskActions.style.maxHeight = "fit-content";
 
@@ -219,17 +307,25 @@ function initSelectedListTasks(listTitle, tasks){
     
     currentTasks = tasks;
     var tasksInnerHtml = "";
+
     const listTasks = document.getElementById("listTasks");
     const tasksArray = tasks.split(',');
-    tasksArray.forEach(task => {
-        const isDone = task.slice(-1) == 1 ? "checked" : "";
-        const actualTask = task.slice(0, -1);
-        
-        tasksInnerHtml += '<div class="task"><input type="checkbox"'+isDone+'/><p>'
-                        +actualTask
-                        +'</p><button class="customButton collapsed orange" onclick="toggleAlertOverlay()"><img src="../assets/trashCan.svg"/>Delete</button>'
-                        +'</div>';
-    });
+
+    setSelectedListById(id);
+
+    if(!tasks.length <= 0){
+        tasksArray.forEach(task => {
+            const isDone = task.slice(-1) == 1 ? "checked" : "";
+            const actualTask = task.slice(0, -1);
+            
+            tasksInnerHtml += '<div class="task"><input type="checkbox"'+isDone+' onchange="checkTask(this)" value="'+task+'"/><p>'
+                            +actualTask
+                            +'</p><button class="customButton collapsed orange" onclick="deleteTask(\''+task+'\')"><img src="../assets/trashCan.svg"/>Delete</button>'
+                            +'</div>';
+        });
+    }else{
+        tasksInnerHtml = "<div style='margin: auto; text-align: center; padding: 5rem; padding-top: 0'>There are no tasks in this list... yet...</div>";
+    }
     listTasks.innerHTML = tasksInnerHtml;
     
     
@@ -266,8 +362,21 @@ function setSelectedAvatar(name){
 function setSelectedList(listElement){
     Array.from(document.getElementsByClassName("taskList")).forEach(taskList => {
         taskList.classList.remove("selectedList");
-    })
+    });
     listElement.classList.add("selectedList");
+    toggleMenu();
+}
+
+function setSelectedListById(id,toggle){
+    Array.from(document.getElementsByClassName("taskList")).forEach(taskList => {
+        taskList.classList.remove("selectedList");
+        if(taskList.getAttribute("listId").match(id)){
+            taskList.classList.add("selectedList");
+            if(toggle){
+                toggleMenu();
+            }
+        }
+    });
 }
 
 /*VIEW TOGGLING*/
@@ -299,4 +408,9 @@ function toggleView(id){
     }else{
         view.style.maxHeight = "0%";
     }
+}
+
+function toggleMenu(){
+    const menuIsActive = document.getElementById("menuIsActive");
+    menuIsActive.checked = !menuIsActive.checked;
 }
