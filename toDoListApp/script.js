@@ -158,10 +158,12 @@ function addNewTask(){
 }
 
 function deleteList(){
-    const userTaksLists = currentUser.taskLists;
+    const userTasksLists = currentUser.taskLists;
+    const listToDelete = userTasksLists[findListIndex()];
+    
+    initAlertOverlay("Do you want to delete list '"+listToDelete.title+"'?",function(){
 
-    initAlertOverlay("Do you really want to delete this list?",function(){
-        userTaksLists.splice(userTaksLists[selectedTaskList],1);
+        userTasksLists.splice(currentUser.taskLists.indexOf(listToDelete),1);
         initUserTasksView();
         toggleAlertOverlay();
     });
@@ -240,6 +242,16 @@ function getTaskListById(id){
         }
     });
     return returnList;
+}
+
+function findListIndex(){
+    let listIndex = -1;
+    for(let i = 0; i < currentUser.taskLists.length; i++){
+        if(currentUser.taskLists[i].id == selectedTaskList){
+            listIndex = i;
+        }
+    }
+    return listIndex;
 }
 
 
